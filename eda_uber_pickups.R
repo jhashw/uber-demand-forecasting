@@ -24,3 +24,24 @@ p3 <- NYC_Uber_Pickups_Bronx |> autoplot(pickups) + labs (x = "Month", y="", tit
 library(grid)
 grid.newpage()
 grid.draw(rbind(ggplotGrob(p1), ggplotGrob(p2), ggplotGrob(p3), size = "last"))
+
+#Calculating and plotting correlations:
+  
+install.packages("GGally")
+library(GGally)
+
+NYC_Uber_Pickups_Brooklyn_df <- data.frame(NYC_Uber_Pickups_Brooklyn)
+ggpairs(NYC_Uber_Pickups_Brooklyn_df, columns=c('pickups', 'spd', 'vsb',
+                                                'temp', 'dewp','slp','pcp01','pcp06','pcp24','sd','hday'))
+
+p1 <- NYC_Uber_Pickups_Brooklyn |> ggplot(aes(x = temp, y = pickups)) + geom_point(size=1) + geom_smooth(method="lm", se=FALSE)+ theme(title=element_text(size=16), axis.text=element_text(size=14), axis.title=element_text(size=16),axis.text.x = element_text(size=14)) + labs(x="temperature (F)")
+
+p2 <- NYC_Uber_Pickups_Brooklyn |> ggplot(aes(x = dewp, y = pickups)) + geom_point(size=1) + geom_smooth(method="lm", se=FALSE) + theme(title=element_text(size=16), axis.text=element_text(size=14), axis.title=element_text(size=16),axis.text.x = element_text(size=12))+ labs(x="dew point (F)")
+
+p3 <- NYC_Uber_Pickups_Brooklyn |> ggplot(aes(x = pcp24, y = pickups)) + geom_point(size=1) + geom_smooth(method="lm", se=FALSE) + theme(title=element_text(size=16), axis.text=element_text(size=14), axis.title=element_text(size=16),axis.text.x = element_text(size=12))+ labs(x="24-hour precipitation")
+
+p4 <- NYC_Uber_Pickups_Brooklyn |> ggplot(aes(x = sd, y = pickups)) + geom_point(size=1) + geom_smooth(method="lm", se=FALSE)+ theme(title=element_text(size=16), axis.text=element_text(size=14), axis.title=element_text(size=16),axis.text.x = element_text(size=12))+ labs(x="snow depth (in)")
+library(grid)
+grid.newpage()
+grid.draw(rbind(ggplotGrob(p1), ggplotGrob(p3), ggplotGrob(p4), size = "last"))
+
