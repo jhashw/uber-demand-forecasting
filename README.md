@@ -4,6 +4,8 @@ Hourly demand forecasting for three NYC boroughs, comparing benchmark methods, e
 
 **Headline result:** harmonic regression with five Fourier terms cut forecast error by roughly a third against the best naive benchmark in Brooklyn and Manhattan. In the Bronx, additive Winter's method won instead. ARIMA and neural networks, the two most complex methods tested, performed worst.
 
+**[Full report (PDF)](report/Final_Report.pdf)** with all figures, accuracy tables, and residual diagnostics.
+
 ---
 
 ## Problem
