@@ -129,4 +129,3 @@ report/
 ```
 
 Written in R. Requires `fpp3` / `forecast`, `tidyverse`, and `ggplot2`.
-harmonic regression models, and the accuracy comparison" -->
