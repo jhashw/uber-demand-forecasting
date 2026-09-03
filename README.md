@@ -2,7 +2,7 @@
 Forecasting pickup demand for Uber in New York City using various methods including Regression, Exponential Smoothing, ARIMA and Neural Networks.
 
 ## Goal
-- Predict hourly Uber demand in each borough of NYC for the month of June 2015 using Jan 2015 - May 2015 hourly pickup data as the training test.
+- Predict hourly Uber demand in each borough of NYC for the month of June 2015 using Jan 2015 - May 2015 hourly pickup data as the training set.
 - Generate business insights based on recurring trends and patterns in the datasets
 
 ## Dataset
