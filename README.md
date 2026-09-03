@@ -28,6 +28,8 @@ The raw data is not segregated by borough, producing duplicate timestamps in `pi
 
 **Two levels of seasonality.** Demand cycles daily and weekly. Within a day the distribution is bimodal, peaking before noon and again in the evening. Across the week, Friday through Sunday run consistently higher than Monday through Thursday. All three boroughs show a steady upward trend across the six months.
 
+![Hourly Uber pickups for Brooklyn, Manhattan and the Bronx for the month of June 2015, showing bimodal seasonality](images/seasonalities.png)
+
 **Weather explains very little.** Correlations with pickup count:
 
 | Variable | Correlation |
@@ -78,9 +80,13 @@ Best model from each family, evaluated on June:
 - **Manhattan** — harmonic regression, K=5 on RMSE and MAE (860 and 634, a 33% RMSE reduction against seasonal naive). Worth noting that damped Winter's beats it on MAPE, 27.1 against 33.0. The two are close enough that the choice depends on whether large-volume hours or proportional accuracy matters more to the planning use case.
 - **Bronx** — Winter's additive. Wins on all three metrics, RMSE 24.0 against 31.5 for drift, a 24% reduction. Harmonic regression is nearly identical on RMSE but noticeably worse on MAPE.
 
+![Prediction results for best performing harmonic regression model for Brooklyn, Manhattan and the Bronx](images/harmonic_regression_forecast.png)
+
 ### Error Analysis
 
 **Complexity did not pay off.** ARIMA and neural networks were the two most involved methods and both underperformed harmonic regression. The forecast horizon is the reason: one month of hourly data is 720 steps ahead. ARIMA and NNAR would need prohibitively large parameterizations to carry structure that far. The neural network forecasts are accurate for roughly the first 24 hours and then decay, with seasonal amplitude flattening out, because p was set near one daily cycle and the model has no information about longer-period patterns.
+
+![Prediction results for neural network model for Brooklyn, Manhattan and the Bronx showing good initial accuracy followed by decaying accuracy](images/neural_network_forecast.png)
 
 **Seasonal naive failed for a diagnosable reason.** It underperformed simpler benchmarks in Brooklyn and the Bronx despite the data being strongly seasonal. The last day of the training window happened to be a weekend, and seasonal naive replicates it forward. Since weekend volume runs high, the entire June forecast was biased upward. Manhattan escaped this because its weekend-to-weekday gap is narrower. This is a training-window artifact rather than a flaw in the method, and it would disappear with a different cutoff date.
 
@@ -89,6 +95,8 @@ Best model from each family, evaluated on June:
 **Harmonic regression captured daily seasonality but not weekly.** The fitted values reproduce the bimodal rush-hour shape well, but the model does not lift weekend demand the way the actual data does. Raising K to 12 changed nothing, which suggests the weekly component needs to be handled with a separate seasonal period rather than more Fourier terms at the daily frequency. Its prediction intervals are substantially narrower than those from exponential smoothing.
 
 ## Business insights
+
+![Hourly Uber pickups by day of week for Brooklyn, Manhattan and the Bronx, showing morning and evening peaks on weekdays and later, extended activity on weekends](images/weekly_patterns.png)
 
 **Surge timing.** Manhattan peaks between 18:00 and 21:00, with over 700,000 pickups in those four hours across the six-month period, close to double the average of all other hours. Brooklyn peaks in the same window at roughly 60% above baseline. The Bronx is far flatter, peaking 17:00–22:00 but at less than half Manhattan's rate of increase, which suggests surge pricing there is more likely driven by driver availability than by demand spikes.
 
