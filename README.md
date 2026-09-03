@@ -76,7 +76,7 @@ Best model from each family, evaluated on June:
 - **Manhattan** — harmonic regression, K=5 on RMSE and MAE (860 and 634, a 33% RMSE reduction against seasonal naive). Worth noting that damped Winter's beats it on MAPE, 27.1 against 33.0. The two are close enough that the choice depends on whether large-volume hours or proportional accuracy matters more to the planning use case.
 - **Bronx** — Winter's additive. Wins on all three metrics, RMSE 24.0 against 31.5 for drift, a 24% reduction. Harmonic regression is nearly identical on RMSE but noticeably worse on MAPE.
 
-### What the errors reveal
+### Error Analysis
 
 **Complexity did not pay off.** ARIMA and neural networks were the two most involved methods and both underperformed harmonic regression. The forecast horizon is the reason: one month of hourly data is 720 steps ahead. ARIMA and NNAR would need prohibitively large parameterizations to carry structure that far. The neural network forecasts are accurate for roughly the first 24 hours and then decay, with seasonal amplitude flattening out, because p was set near one daily cycle and the model has no information about longer-period patterns.
 
