@@ -112,20 +112,4 @@ The borough-level breakdown is what makes this actionable. A single citywide mod
 - Six months of history covers no full annual cycle, so nothing here captures yearly seasonality.
 - Evaluation is a single fixed train/test split rather than rolling-origin cross-validation, so the accuracy figures depend on the specific choice of June as the test month. The seasonal naive failure above is a direct example of that sensitivity.
 
-## Repository contents
-
-```
-data/
-  uber_nyc_enriched.csv          Source dataset
-R/
-  01_eda_uber_pickups.R          Series construction, seasonality, weather correlations
-  02_benchmark_forecasting_methods.R
-  03_exp_smoothing_harmonic_regression.R
-  04_arima.R
-  05_neural_nets.R
-images/                          Exported figures
-report/
-  Final_Report.pdf               Full write-up with all figures and intermediate tables
-```
-
 Written in R. Requires `fpp3` / `forecast`, `tidyverse`, and `ggplot2`.
